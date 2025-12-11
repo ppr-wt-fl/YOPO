@@ -3,7 +3,7 @@ set -e
 
 LOG_DIR="/yopo-artifact/logs"
 NUM_CRAWLER=32
-monitor_path="/yopo-artifact/scripts/crawler/adgraph/running_check"
+monitor_path="/yopo-artifact/scripts/crawler/adgraph/running_check_adgraph"
 
 
 echo "[Crawling phase 0] Unzip AdGraph chrome binary..."
