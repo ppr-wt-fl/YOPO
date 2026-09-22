@@ -2,7 +2,7 @@
 set -e
 
 PYTHON_SCRIPT="/yopo-artifact/scripts/crawler/save_html_files.py"
-NUM_CRAWLER=16
+NUM_CRAWLER=64
 LOG_DIR="/yopo-artifact/logs"
 
 # activate conda env
