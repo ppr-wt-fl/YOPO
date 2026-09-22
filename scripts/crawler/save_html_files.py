@@ -40,7 +40,7 @@ BASE_TIMELINE_DIR = BASE_RENDERING_STREAM_DIR + "/timeline"
 NUM_CRAWLERS = args.num_crawler
 
 # Replace this file with your own!
-TOP10K_FPATH = BASE_DIR + "/dataset/tranco-20241218.csv"
+TOP10K_FPATH = BASE_DIR + "/dataset/tranco-20260922-1m.csv"
 
 url_list = read_url_list(TOP10K_FPATH)[:args.num_sites]
 print("crawling " + str(len(url_list)) + " domains")
