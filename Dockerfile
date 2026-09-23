@@ -67,7 +67,7 @@ RUN conda create -n python2 python=2.7.18 -y \
     && conda run -n python2 pip install --no-cache-dir -r ./requirements_python2.txt
 
 RUN conda create -n adflush python=3.8.19 -y \
-    && conda run -n adflush pip install --no-cache-dir -r ./requirements_adflush.txt
+    && conda run -n adflush pip install --no-cache-dir --timeout 120 --retries 10 -r ./requirements_adflush.txt
 
 # Install mitmproxy and venv environment
 RUN cd /yopo-artifact/mitmproxy && ./dev.sh
