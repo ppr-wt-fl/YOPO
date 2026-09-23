@@ -3,7 +3,7 @@
 	url = https://github.com/godeastone/AdFlush.git
 [submodule "OpenWPM"]
 	path = OpenWPM
-	url = https://github.com/godeastone/OpenWPM.git
+	url = https://github.com/ppr-wt-fl/OpenWPM.git
 [submodule "PageGraph/pagegraph-query"]
 	path = PageGraph/pagegraph-query
 	url = https://github.com/godeastone/pagegraph-query.git
