@@ -71,6 +71,8 @@ RUN conda create -n adflush python=3.8.19 -y \
 
 # Install mitmproxy and venv environment
 RUN cd /yopo-artifact/mitmproxy && ./dev.sh
+# mitmproxy needs pkg_resources, removed in setuptools>=81
+RUN /yopo-artifact/mitmproxy/venv/bin/pip install "setuptools<81"
 
 RUN chmod 755 /opt/anaconda/etc/profile.d/conda.sh
 
