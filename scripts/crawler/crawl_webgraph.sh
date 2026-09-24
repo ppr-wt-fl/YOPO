@@ -4,7 +4,7 @@ set -e
 LOG_DIR="/yopo-artifact/logs"
 
 echo "[Crawling phase 0] Unzip firefox requirements..."
-unzip /yopo-artifact/OpenWPM/firefox-bin/libxul.so.zip -d /yopo-artifact/OpenWPM/firefox-bin/
+unzip -o /yopo-artifact/OpenWPM/firefox-bin/libxul.so.zip -d /yopo-artifact/OpenWPM/firefox-bin/
 
 echo "[Crawling phase 1] Crawling websites using OpenWPM..."
 echo "[Crawling phase 1] Enter 'tmux attach -t crawling_webgraph' or check crawl_webgraph.log files to see what happens!"

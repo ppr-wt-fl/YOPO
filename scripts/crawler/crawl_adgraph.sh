@@ -7,7 +7,7 @@ monitor_path="/yopo-artifact/scripts/crawler/adgraph/running_check_adgraph"
 
 
 echo "[Crawling phase 0] Unzip AdGraph chrome binary..."
-unzip /yopo-artifact/A4/AdGraphAPI/AdGraph-Ubuntu-16.04/chrome.zip -d /yopo-artifact/A4/AdGraphAPI/AdGraph-Ubuntu-16.04/
+unzip -o /yopo-artifact/A4/AdGraphAPI/AdGraph-Ubuntu-16.04/chrome.zip -d /yopo-artifact/A4/AdGraphAPI/AdGraph-Ubuntu-16.04/
 chmod 755 /yopo-artifact/A4/AdGraphAPI/AdGraph-Ubuntu-16.04/chrome
 
 echo "[Crawling phase 1] Generating timeline files using AdGraph binary..."
