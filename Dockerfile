@@ -69,6 +69,9 @@ RUN conda create -n python2 python=2.7.18 -y \
 RUN conda create -n adflush python=3.8.19 -y \
     && conda run -n adflush pip install --no-cache-dir --timeout 120 --retries 10 -r ./requirements_adflush.txt
 
+# ast_parser.js (used by AdFlush's MY_embedding.py) needs its npm deps installed
+RUN cd /yopo-artifact/AdFlush/source && npm install
+
 # Install mitmproxy and venv environment
 RUN cd /yopo-artifact/mitmproxy && ./dev.sh
 # mitmproxy needs pkg_resources, removed in setuptools>=81
