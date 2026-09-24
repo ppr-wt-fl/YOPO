@@ -16,7 +16,9 @@ mkdir /yopo-artifact/OpenWPM/datadir_proxy_unmod/content_dir
 mkdir /yopo-artifact/OpenWPM/datadir_proxy_unmod/crawl_dir
 mkdir /yopo-artifact/OpenWPM/datadir_proxy_unmod/log_dir
 
-# Create new session
+# Create new session (kill any stale session left over from an interrupted
+# previous run, so re-running after a failure doesn't hit "duplicate session")
+tmux kill-session -t crawling_webgraph 2>/dev/null || true
 tmux new-session -d -s crawling_webgraph
 for i in {1..16}; do
     tmux new-window -t crawling_webgraph:$i

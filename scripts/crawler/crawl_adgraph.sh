@@ -30,7 +30,9 @@ done
 rm -rf /root/rendering_stream
 sleep 2
 
-# Create new session
+# Create new session (kill any stale session left over from an interrupted
+# previous run, so re-running after a failure doesn't hit "duplicate session")
+tmux kill-session -t crawling 2>/dev/null || true
 tmux new-session -d -s crawling
 for i in {1..10}; do
     tmux new-window -t crawling:$i
@@ -48,6 +50,7 @@ tmux send-keys -t crawling:8 "${command_proxy} 6673" Enter
 tmux send-keys -t crawling:9 "${command_proxy} 6674" Enter
 tmux send-keys -t crawling:10 "${command_proxy} 6675" Enter
 # tmux attach-session -t crawling
+tmux kill-session -t crawling_python 2>/dev/null || true
 tmux new-session -d -s crawling_python
 
 for i in {1..10}; do
