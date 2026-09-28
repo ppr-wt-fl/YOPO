@@ -63,9 +63,11 @@ def labelling_unmod_webgraph():
     df_b = pd.read_csv('/yopo-artifact/WebGraph/result_webgraph_unmod/merged_labelled.csv')
 
     # Merge the two dataframes on 'visit_id' and 'name'
-    df_c = pd.merge(df_a, df_b[['name', 'label', 'top_level_url']], on=['name'], how='left').drop_duplicates(subset='name', keep='first')
+    keys = ['visit_id', 'name']
+    df_b = df_b[keys + ['label', 'top_level_url']].drop_duplicates(subset=keys, keep='first')
+    df_c = pd.merge(df_a, df_b, on=keys, how='left').drop_duplicates(subset=keys, keep='first')
 
-    df_c.drop(columns=['Unnamed: 0'], inplace=True)
+    df_c.drop(columns=['Unnamed: 0'], inplace=True, errors='ignore')
     df_c = df_c.dropna(subset=["label"])
     
     specific_column = df_c['top_level_url']
