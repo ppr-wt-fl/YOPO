@@ -82,8 +82,10 @@ def labelling_unmod_webgraph():
 def delte_flow_from_features():
     csv_file_path = "/yopo-artifact/WebGraph/result_webgraph_unmod/merged_features_with_labelled.csv"
     df = pd.read_csv(csv_file_path)
-    columns_to_delete = ["num_get_storage", "num_set_storage", "num_get_cookie", "num_requests_sent"]
+    columns_to_delete = ["num_get_storage", "num_set_storage", "num_get_cookie"]
     df = df.drop(columns=columns_to_delete)
+    # keep WebGraph's runtime count under its own name; moved to the end so MY_embedding.py's positional indexes still hold
+    df["num_requests_sent_webgraph"] = df.pop("num_requests_sent")
     output_file_path = "/yopo-artifact/WebGraph/result_webgraph_unmod/merged_features_with_labelled_exclude_flow.csv"
     df.to_csv(output_file_path, index=False)
 
@@ -109,7 +111,8 @@ def sampling_column_adflush():
     df = pd.read_csv(csv_file_path)
 
     # Define the list of column names in the desired order
-    columns_list = ["top_level_url", "visit_id", "name", "content_policy_type", "url_length", "brackettodot", "is_third_party", "keyword_raw_present", "num_get_storage", "num_set_storage", "num_get_cookie", "num_requests_sent", "req_url_33", "req_url_135", "req_url_179", "fqdn_4", "fqdn_13", "fqdn_14", "fqdn_15", "fqdn_23", "fqdn_26", "fqdn_27", "ng_0_0_2", "ng_0_15_15", "ng_2_13_2", "ng_15_0_3", "ng_15_0_15", "ng_15_15_15", "avg_ident", "avg_charperline", "CLASS"]
+    # num_requests_sent is kept in two versions: static regex count (extension definition) and WebGraph's runtime count
+    columns_list = ["top_level_url", "visit_id", "name", "content_policy_type", "url_length", "brackettodot", "is_third_party", "keyword_raw_present", "num_get_storage", "num_set_storage", "num_get_cookie", "num_requests_sent_static", "num_requests_sent_webgraph", "req_url_33", "req_url_135", "req_url_179", "fqdn_4", "fqdn_13", "fqdn_14", "fqdn_15", "fqdn_23", "fqdn_26", "fqdn_27", "ng_0_0_2", "ng_0_15_15", "ng_2_13_2", "ng_15_0_3", "ng_15_0_15", "ng_15_15_15", "avg_ident", "avg_charperline", "CLASS"]
     filtered_df = df[columns_list]
 
     # Save
