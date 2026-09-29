@@ -82,10 +82,9 @@ def labelling_unmod_webgraph():
 def delte_flow_from_features():
     csv_file_path = "/yopo-artifact/WebGraph/result_webgraph_unmod/merged_features_with_labelled.csv"
     df = pd.read_csv(csv_file_path)
-    columns_to_delete = ["num_get_storage", "num_set_storage", "num_get_cookie"]
-    df = df.drop(columns=columns_to_delete)
-    # keep WebGraph's runtime count under its own name; moved to the end so MY_embedding.py's positional indexes still hold
-    df["num_requests_sent_webgraph"] = df.pop("num_requests_sent")
+    # keep WebGraph's dataflow counts under their own names; moved to the end so MY_embedding.py's positional indexes still hold
+    for column in ["num_get_storage", "num_set_storage", "num_get_cookie", "num_requests_sent"]:
+        df[column + "_webgraph"] = df.pop(column)
     output_file_path = "/yopo-artifact/WebGraph/result_webgraph_unmod/merged_features_with_labelled_exclude_flow.csv"
     df.to_csv(output_file_path, index=False)
 
@@ -110,9 +109,20 @@ def sampling_column_adflush():
     csv_file_path = '/yopo-artifact/data/dataset/from_adflush/features_raw_all_feature.csv'
     df = pd.read_csv(csv_file_path)
 
+    flow = ["num_get_storage", "num_set_storage", "num_get_cookie", "num_requests_sent"]
+
+    # keep MY_embedding.py's regex counts next to WebGraph's
+    for column in flow[:3]:
+        df[column + "_regex"] = df[column]
+    df["num_requests_sent_regex"] = df["num_requests_sent_static"]
+
+    # AdFlush uses keyword_char_present; stored under YOPO's name so the attack scripts keep working
+    df["keyword_raw_present"] = df["keyword_char_present"]
+
     # Define the list of column names in the desired order
-    # num_requests_sent is kept in two versions: static regex count (extension definition) and WebGraph's runtime count
-    columns_list = ["top_level_url", "visit_id", "name", "content_policy_type", "url_length", "brackettodot", "is_third_party", "keyword_raw_present", "num_get_storage", "num_set_storage", "num_get_cookie", "num_requests_sent_static", "num_requests_sent_webgraph", "req_url_33", "req_url_135", "req_url_179", "fqdn_4", "fqdn_13", "fqdn_14", "fqdn_15", "fqdn_23", "fqdn_26", "fqdn_27", "ng_0_0_2", "ng_0_15_15", "ng_2_13_2", "ng_15_0_3", "ng_15_0_15", "ng_15_15_15", "avg_ident", "avg_charperline", "CLASS"]
+    columns_list = ["top_level_url", "visit_id", "name", "content_policy_type", "url_length", "brackettodot", "is_third_party", "keyword_raw_present", "num_get_storage", "num_set_storage", "num_get_cookie", "num_requests_sent", "req_url_33", "req_url_135", "req_url_179", "fqdn_4", "fqdn_13", "fqdn_14", "fqdn_15", "fqdn_23", "fqdn_26", "fqdn_27", "ng_0_0_2", "ng_0_15_15", "ng_2_13_2", "ng_15_0_3", "ng_15_0_15", "ng_15_15_15", "avg_ident", "avg_charperline", "CLASS"]
+    # regex counts go after CLASS so the first 31 columns keep their positions
+    columns_list += [column + "_regex" for column in flow]
     filtered_df = df[columns_list]
 
     # Save

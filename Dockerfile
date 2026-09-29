@@ -81,6 +81,7 @@ RUN chmod 755 /opt/anaconda/etc/profile.d/conda.sh
 
 # Install conda environment for OpenWPM
 RUN cd /yopo-artifact/OpenWPM && ./install.sh
+RUN conda run -n openwpm pip install --no-cache-dir adblock==0.6.0
 
 # Install nvm & upgrade nodejs
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash && \

@@ -18,3 +18,4 @@ pyyaml
 urllib3==1.26.6
 tldextract==5.1.2
 gensim==4.3.2
+plyvel==1.5.1

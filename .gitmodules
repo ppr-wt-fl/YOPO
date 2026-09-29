@@ -1,6 +1,6 @@
 [submodule "AdFlush"]
 	path = AdFlush
-	url = https://github.com/godeastone/AdFlush.git
+	url = https://github.com/ppr-wt-fl/AdFlushYOPO.git
 [submodule "OpenWPM"]
 	path = OpenWPM
 	url = https://github.com/ppr-wt-fl/OpenWPM.git
@@ -18,4 +18,4 @@
 	url = https://github.com/godeastone/mitmproxy.git
 [submodule "WebGraph"]
 	path = WebGraph
-	url = https://github.com/godeastone/WebGraph.git
+	url = https://github.com/ppr-wt-fl/WebGraph.git

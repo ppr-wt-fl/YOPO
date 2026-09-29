@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 import os
 import csv
 import numpy as np
@@ -12,17 +13,14 @@ import joblib
 df_orig = pd.read_csv("/yopo-artifact/data/dataset/from_adflush/features_raw.csv")
 df = pd.read_csv("/yopo-artifact/data/dataset/from_adflush/features_raw.csv")
 
-# Label encoding categorical features and save info
-label_encoder = LabelEncoder()
-columns_to_encode = ['content_policy_type']
-for column in columns_to_encode:
-    df[column] = label_encoder.fit_transform(df[column])
-
-column = "content_policy_type"
-joblib.dump(label_encoder, f'/yopo-artifact/scripts/crawler/adflush/encoding_adflush/{column}_encoder.joblib')
+# AdFlush target-encodes content_policy_type with this dict (AdFlush/source/main.py)
+with open("/yopo-artifact/AdFlush/source/json/content_type_dict.json") as f:
+    content_type_dict = json.load(f)
+df['content_policy_type'] = df['content_policy_type'].map(content_type_dict)
 
 # change AD to 1, NonAD to 0
-df.dropna(subset=['CLASS'], inplace=True)
+# rows without a content type have no AdFlush encoding
+df.dropna(subset=['CLASS', 'content_policy_type'], inplace=True)
 df['CLASS'] = df['CLASS'].replace({True: int(1), False: int(0)})
 
 # save original one
