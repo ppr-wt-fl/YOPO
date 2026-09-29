@@ -116,6 +116,9 @@ def sampling_column_adflush():
         df[column + "_regex"] = df[column]
     df["num_requests_sent_regex"] = df["num_requests_sent_static"]
 
+    # AdFlush's num_* features are WebGraph's dataflow counts, not the regex counts from MY_embedding.py
+    for column in flow:
+        df[column] = df[column + "_webgraph"]
     # AdFlush uses keyword_char_present; stored under YOPO's name so the attack scripts keep working
     df["keyword_raw_present"] = df["keyword_char_present"]
 
